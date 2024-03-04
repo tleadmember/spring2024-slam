@@ -1,0 +1,3 @@
+[console_scripts]
+bump_go_main = br2_fsm_bumpgo_py.bump_go_main:main
+

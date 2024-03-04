@@ -1,0 +1,11 @@
+source;share/br2_tracking/hook/cmake_prefix_path.ps1
+source;share/br2_tracking/hook/cmake_prefix_path.dsv
+source;share/br2_tracking/hook/cmake_prefix_path.sh
+source;share/br2_tracking/hook/ld_library_path_lib.ps1
+source;share/br2_tracking/hook/ld_library_path_lib.dsv
+source;share/br2_tracking/hook/ld_library_path_lib.sh
+source;share/br2_tracking/local_setup.bash
+source;share/br2_tracking/local_setup.dsv
+source;share/br2_tracking/local_setup.ps1
+source;share/br2_tracking/local_setup.sh
+source;share/br2_tracking/local_setup.zsh

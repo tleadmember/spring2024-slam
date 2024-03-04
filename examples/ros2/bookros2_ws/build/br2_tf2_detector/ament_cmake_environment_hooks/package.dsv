@@ -1,0 +1,4 @@
+source;share/br2_tf2_detector/local_setup.bash
+source;share/br2_tf2_detector/local_setup.dsv
+source;share/br2_tf2_detector/local_setup.sh
+source;share/br2_tf2_detector/local_setup.zsh

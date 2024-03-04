@@ -1,0 +1,7 @@
+setup.py
+urdf_test/__init__.py
+urdf_test/description_test.py
+urdf_test.egg-info/PKG-INFO
+urdf_test.egg-info/SOURCES.txt
+urdf_test.egg-info/dependency_links.txt
+urdf_test.egg-info/top_level.txt

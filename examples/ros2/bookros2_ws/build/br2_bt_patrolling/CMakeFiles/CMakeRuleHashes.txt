@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+fc8e1dabff988cfdfc460b41630c6f4e CMakeFiles/br2_bt_patrolling_uninstall

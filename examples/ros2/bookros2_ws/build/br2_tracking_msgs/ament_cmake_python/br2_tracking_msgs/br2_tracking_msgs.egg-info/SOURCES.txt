@@ -1,0 +1,8 @@
+setup.py
+br2_tracking_msgs/__init__.py
+br2_tracking_msgs.egg-info/PKG-INFO
+br2_tracking_msgs.egg-info/SOURCES.txt
+br2_tracking_msgs.egg-info/dependency_links.txt
+br2_tracking_msgs.egg-info/top_level.txt
+br2_tracking_msgs/msg/__init__.py
+br2_tracking_msgs/msg/_pan_tilt_command.py

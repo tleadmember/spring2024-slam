@@ -1,0 +1,4 @@
+source;share/hey5_description/local_setup.bash
+source;share/hey5_description/local_setup.dsv
+source;share/hey5_description/local_setup.sh
+source;share/hey5_description/local_setup.zsh

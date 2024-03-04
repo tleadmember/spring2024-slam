@@ -1,0 +1,14 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from br2_tracking_msgs/msg/PanTiltCommand.msg
+// generated code does not contain a copyright notice
+
+
+module br2_tracking_msgs {
+  module msg {
+    struct PanTiltCommand {
+      double pan;
+
+      double tilt;
+    };
+  };
+};

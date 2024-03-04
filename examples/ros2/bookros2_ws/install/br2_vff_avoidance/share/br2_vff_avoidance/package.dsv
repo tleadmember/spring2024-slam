@@ -1,0 +1,11 @@
+source;share/br2_vff_avoidance/hook/cmake_prefix_path.ps1
+source;share/br2_vff_avoidance/hook/cmake_prefix_path.dsv
+source;share/br2_vff_avoidance/hook/cmake_prefix_path.sh
+source;share/br2_vff_avoidance/hook/ld_library_path_lib.ps1
+source;share/br2_vff_avoidance/hook/ld_library_path_lib.dsv
+source;share/br2_vff_avoidance/hook/ld_library_path_lib.sh
+source;share/br2_vff_avoidance/local_setup.bash
+source;share/br2_vff_avoidance/local_setup.dsv
+source;share/br2_vff_avoidance/local_setup.ps1
+source;share/br2_vff_avoidance/local_setup.sh
+source;share/br2_vff_avoidance/local_setup.zsh
