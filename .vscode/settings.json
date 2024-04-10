@@ -3,5 +3,6 @@
         "string": "cpp"
     },
     "cmake.useCMakePresets": "never",
-    "cmake.options.statusBarVisibility": "visible"
+    "cmake.options.statusBarVisibility": "visible",
+    "git.ignoreLimitWarning": true
 }

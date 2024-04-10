@@ -112,7 +112,7 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
     && make -j$(nproc) && make install && ldconfig
 
 # Set display environment variable to display GUIs in Windows
-ENV DISPLAY=host.docker.internal:0
+# ENV DISPLAY=host.docker.internal:0
 
 
 
