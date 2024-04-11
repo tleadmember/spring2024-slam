@@ -29,53 +29,72 @@
 // SFM
 // #include "frame.h"
 
-// ----------------------------------------------------------------------------
-typedef std::vector<std::shared_ptr<open3d::geometry::PointCloud>> ptCloudVector;
+using namespace open3d;
 
-ptCloudVector visualize_and_group_pt_cloud(const int& num_files,
-                                  const std::string& file_dir,
-                                  const std::vector<std::string>& file_names) {
+// Type definitions
+typedef std::shared_ptr<geometry::PointCloud> ptCloudPtr;
+typedef std::vector<ptCloudPtr> ptCloudVec;
+
+// Visualize point clouds while also returning a vector of point clouds passed to function
+ptCloudVec visualizeAndGroupPtClouds(const int& num_files,
+                                     const std::string& file_dir,
+                                     const std::vector<std::string>& file_names) {
+    ptCloudVec pc_vec;
+
     for (int i = 0; i < num_files; ++i) {
-    std::string file_path = file_dir + file_names[i];  
+        std::string file_path = file_dir + file_names[i];  
 
-    // read point cloud data
-    auto point_cloud_ptr = std::make_shared<open3d::geometry::PointCloud>();
-    open3d::io::ReadPointCloud(file_path, *point_cloud_ptr);
+        // read point cloud data
+        ptCloudPtr point_cloud_ptr = std::make_shared<geometry::PointCloud>();
+        io::ReadPointCloud(file_path, *point_cloud_ptr);
 
-    // create visualization window
-    open3d::visualization::Visualizer visualizer;
-    visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
+        // add to vector of point clouds to return
+        pc_vec.emplace_back(point_cloud_ptr);
 
-    // add point cloud to the window
-    visualizer.AddGeometry(point_cloud_ptr);
+        // // create visualization window
+        // visualization::Visualizer visualizer;
+        // visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
 
-    // run the visualization
-    visualizer.Run();
+        // // add point cloud to the window
+        // visualizer.AddGeometry(point_cloud_ptr);
+
+        // // run the visualization
+        // visualizer.Run();
     }
 
-    return 
+    return pc_vec;
 }
 
-void visualize_pt_cloud(const int& num_files,
-                                  const std::string& file_dir,
-                                  const std::vector<std::string>& file_names) {
-    for (int i = 0; i < num_files; ++i) {
-    std::string file_path = file_dir + file_names[i];  
+// Visualize point clouds
+void visualizePtClouds(const int& count,
+                       const ptCloudVec pc_vec) {
+    for (int i = 0; i < count; ++i) {
+        // read point cloud data
+        ptCloudPtr point_cloud_ptr = pc_vec[i];
 
-    // read point cloud data
-    auto point_cloud_ptr = std::make_shared<open3d::geometry::PointCloud>();
-    open3d::io::ReadPointCloud(file_path, *point_cloud_ptr);
+        // create visualization window
+        visualization::Visualizer visualizer;
+        visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
 
-    // create visualization window
-    open3d::visualization::Visualizer visualizer;
-    visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
+        // add point cloud to the window
+        visualizer.AddGeometry(point_cloud_ptr);
 
-    // add point cloud to the window
-    visualizer.AddGeometry(point_cloud_ptr);
-
-    // run the visualization
-    visualizer.Run();
+        // run the visualization
+        visualizer.Run();
     }
+}
+
+// Visualize a registration
+void VisualizeRegistration(const geometry::PointCloud &source,
+                           const geometry::PointCloud &target,
+                           const Eigen::Matrix4d &Transformation) {
+    ptCloudPtr source_transformed_ptr(new geometry::PointCloud);
+    ptCloudPtr target_ptr(new geometry::PointCloud);
+    *source_transformed_ptr = source;
+    *target_ptr = target;
+    source_transformed_ptr->Transform(Transformation);
+    visualization::DrawGeometries({source_transformed_ptr, target_ptr},
+                                  "Registration result");
 }
 
 // ----------------------------------------------------------------------------
@@ -104,12 +123,52 @@ int main() {
         lidar_file_names.emplace_back(name);
     }
 
-    // load point clouds and display them
-    visualize_pt_cloud(num_files, rgbd_file_dir, rgbd_file_names);
-    visualize_pt_cloud(num_files, lidar_file_dir, lidar_file_names);
+    // load point clouds and display them, and group into vectors
+    ptCloudVec rgbd_pc_vec, lidar_pc_vec;
+    rgbd_pc_vec = visualizeAndGroupPtClouds(num_files, rgbd_file_dir, rgbd_file_names);
+    lidar_pc_vec = visualizeAndGroupPtClouds(num_files, lidar_file_dir, lidar_file_names);
 
     // downsample
+    ptCloudVec rgbd_pc_vec_down = rgbd_pc_vec; // initialize
+    ptCloudVec lidar_pc_vec_down = lidar_pc_vec;
+    for (int i = 0; i < num_files; ++i) {   
+        rgbd_pc_vec_down[i] = rgbd_pc_vec[i]->VoxelDownSample(0.05);
+        lidar_pc_vec_down[i] = lidar_pc_vec[i]->VoxelDownSample(0.1);
+    }
+
+    // // visualize point clouds after downsampling
+    // visualizePtClouds(num_files, rgbd_pc_vec_down);
+    // visualizePtClouds(num_files, lidar_pc_vec_down);
+
+    // register rgbd point clouds using ICP
+    std::vector<Eigen::Matrix4d> trans_vec;
+    for (int i = 0; i < num_files; ++i) {
+        trans_vec.emplace_back(Eigen::Matrix4d::Identity()); // initialize)
+    }
+    for (int i = 0; i < num_files-1; ++i) {
+        ptCloudPtr source_down = rgbd_pc_vec_down[i];
+        ptCloudPtr target_down = rgbd_pc_vec_down[i+1];
+    }
     
+    // visualize the registration above
+
+
+    // register lidar point clouds using ICP
+
+
+    // visualize the registration above
+
+
+    // register rgbd point clouds using RANSAC with FPFH correspondence
+
+
+    // visualize the registration above
+
+
+    // register lidar point clouds using RANSAC with FPFH correspondence
+
+
+    // visualize the registration above
 
 
     return 0;
