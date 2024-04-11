@@ -1,4 +1,0 @@
-/workspaces/spring2024-slam/hw/hw-04/lidar_slam/build/CMakeFiles/external_open3d.dir
-/workspaces/spring2024-slam/hw/hw-04/lidar_slam/build/CMakeFiles/lidarslam.dir
-/workspaces/spring2024-slam/hw/hw-04/lidar_slam/build/CMakeFiles/edit_cache.dir
-/workspaces/spring2024-slam/hw/hw-04/lidar_slam/build/CMakeFiles/rebuild_cache.dir
