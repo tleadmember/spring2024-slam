@@ -29,30 +29,13 @@
 // SFM
 // #include "frame.h"
 
-
 // ----------------------------------------------------------------------------
-int main() {
+typedef std::vector<std::shared_ptr<open3d::geometry::PointCloud>> ptCloudVector;
 
-// rgbd data
-// std::string base_name = "cloud_bin_";
-// const std::string file_dir = "../data/rgbd/"; 
-
-// lidar data
-std::string base_name = "Hokuyo_";
-const std::string file_dir = "../data/lidar/"; 
-
-const int num_files = 10; // number of point clouds in the dataset
-
-// file names
-std::vector<std::string> file_names;
-for (int i = 0; i < num_files; ++i) {   
-    std::string name = base_name + std::to_string(i) + ".ply";
-    file_names.emplace_back(name);
-}
-
-
-// load point clouds and display them
-for (int i = 0; i < num_files; ++i) {
+ptCloudVector visualize_and_group_pt_cloud(const int& num_files,
+                                  const std::string& file_dir,
+                                  const std::vector<std::string>& file_names) {
+    for (int i = 0; i < num_files; ++i) {
     std::string file_path = file_dir + file_names[i];  
 
     // read point cloud data
@@ -68,7 +51,66 @@ for (int i = 0; i < num_files; ++i) {
 
     // run the visualization
     visualizer.Run();
+    }
+
+    return 
 }
 
-return 0;
+void visualize_pt_cloud(const int& num_files,
+                                  const std::string& file_dir,
+                                  const std::vector<std::string>& file_names) {
+    for (int i = 0; i < num_files; ++i) {
+    std::string file_path = file_dir + file_names[i];  
+
+    // read point cloud data
+    auto point_cloud_ptr = std::make_shared<open3d::geometry::PointCloud>();
+    open3d::io::ReadPointCloud(file_path, *point_cloud_ptr);
+
+    // create visualization window
+    open3d::visualization::Visualizer visualizer;
+    visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
+
+    // add point cloud to the window
+    visualizer.AddGeometry(point_cloud_ptr);
+
+    // run the visualization
+    visualizer.Run();
+    }
+}
+
+// ----------------------------------------------------------------------------
+int main() {
+
+    // rgbd data
+    std::string rgbd_base_name = "cloud_bin_";
+    const std::string rgbd_file_dir = "../data/rgbd/"; 
+
+    // lidar data
+    std::string lidar_base_name = "Hokuyo_";
+    const std::string lidar_file_dir = "../data/lidar/"; 
+
+    const int num_files = 10; // number of point clouds in the dataset
+
+    // file names
+    std::vector<std::string> rgbd_file_names;
+    for (int i = 0; i < num_files; ++i) {   
+        std::string name = rgbd_base_name + std::to_string(i) + ".ply";
+        rgbd_file_names.emplace_back(name);
+    }
+
+    std::vector<std::string> lidar_file_names;
+    for (int i = 0; i < num_files; ++i) {   
+        std::string name = lidar_base_name + std::to_string(i) + ".ply";
+        lidar_file_names.emplace_back(name);
+    }
+
+    // load point clouds and display them
+    visualize_pt_cloud(num_files, rgbd_file_dir, rgbd_file_names);
+    visualize_pt_cloud(num_files, lidar_file_dir, lidar_file_names);
+
+    // downsample
+    
+
+
+    return 0;
 }
