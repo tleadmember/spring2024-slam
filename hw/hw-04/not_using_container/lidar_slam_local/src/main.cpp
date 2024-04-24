@@ -350,46 +350,46 @@ int main() {
     //                               1024, 768);
 
 
-    // register lidar point clouds using RANSAC with FPFH
-    const double lidar_kd_radius_factor = 5.0;
-    const double lidar_fpfh_kd_radius_factor = 5.0;
-    const int lidar_max_nn = 100;
-    const int lidar_fpfh_max_nn = 100;
-    const bool mutual_filter = false;
-    const double distance_threshold = 2.0 * lidar_voxel_size;
-    const int ransac_n = 5;
-    const double similarity_threshold = 0.9;
-    const int max_iterations = 1000000;
-    const double confidence = 0.999;
+    // // register lidar point clouds using RANSAC with FPFH
+    // const double lidar_kd_radius_factor = 5.0;
+    // const double lidar_fpfh_kd_radius_factor = 5.0;
+    // const int lidar_max_nn = 100;
+    // const int lidar_fpfh_max_nn = 100;
+    // const bool mutual_filter = false;
+    // const double distance_threshold = 2.0 * lidar_voxel_size;
+    // const int ransac_n = 5;
+    // const double similarity_threshold = 0.9;
+    // const int max_iterations = 1000000;
+    // const double confidence = 0.999;
 
-    std::vector<Eigen::Matrix4d> lidar_ransac_trans_vec = 
-        RansacFPFHWrapper(lidar_pc_vec_down,
-                          num_files,
-                          lidar_voxel_size,
-                          lidar_kd_radius_factor,
-                          lidar_fpfh_kd_radius_factor,
-                          lidar_max_nn,
-                          lidar_fpfh_max_nn,
-                          mutual_filter,
-                          distance_threshold,
-                          ransac_n,
-                          similarity_threshold,
-                          max_iterations,
-                          confidence);
-    // transform point clouds (into final frame, instead of 0-frame)
-    Eigen::Matrix4d lidar_ransac_trans_accum = Eigen::Matrix4d::Identity();
-    for (int i = num_files-1; i > 0; --i) {
-        lidar_ransac_trans_accum = lidar_ransac_trans_vec[i-1] * lidar_ransac_trans_accum;
-        lidar_pc_vec[i-1]->Transform(lidar_ransac_trans_accum);
-    }
-    // fuse point clouds and visualize
-    ptCloudPtr lidar_ransac_pc_combined_ptr(new geometry::PointCloud);
-    for (int i = 0; i < num_files; ++i) {   
-        *lidar_ransac_pc_combined_ptr += *lidar_pc_vec[i];
-    }
-    visualization::DrawGeometries({lidar_ransac_pc_combined_ptr},
-                                  "Combined registration result (RANSAC on LIDAR data)", 
-                                  1024, 768);
+    // std::vector<Eigen::Matrix4d> lidar_ransac_trans_vec = 
+    //     RansacFPFHWrapper(lidar_pc_vec_down,
+    //                       num_files,
+    //                       lidar_voxel_size,
+    //                       lidar_kd_radius_factor,
+    //                       lidar_fpfh_kd_radius_factor,
+    //                       lidar_max_nn,
+    //                       lidar_fpfh_max_nn,
+    //                       mutual_filter,
+    //                       distance_threshold,
+    //                       ransac_n,
+    //                       similarity_threshold,
+    //                       max_iterations,
+    //                       confidence);
+    // // transform point clouds (into final frame, instead of 0-frame)
+    // Eigen::Matrix4d lidar_ransac_trans_accum = Eigen::Matrix4d::Identity();
+    // for (int i = num_files-1; i > 0; --i) {
+    //     lidar_ransac_trans_accum = lidar_ransac_trans_vec[i-1] * lidar_ransac_trans_accum;
+    //     lidar_pc_vec[i-1]->Transform(lidar_ransac_trans_accum);
+    // }
+    // // fuse point clouds and visualize
+    // ptCloudPtr lidar_ransac_pc_combined_ptr(new geometry::PointCloud);
+    // for (int i = 0; i < num_files; ++i) {   
+    //     *lidar_ransac_pc_combined_ptr += *lidar_pc_vec[i];
+    // }
+    // visualization::DrawGeometries({lidar_ransac_pc_combined_ptr},
+    //                               "Combined registration result (RANSAC on LIDAR data)", 
+    //                               1024, 768);
 
 
     return 0;

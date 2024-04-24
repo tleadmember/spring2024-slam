@@ -9,53 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 SET(CMAKE_CXX_FLAGS "-D DEBUG -Wall -Wfatal-errors -Wextra -Wno-unused-variable")
 # SET(CMAKE_CXX_FLAGS "-DOpen3D_ROOT=${HOME}/open3d_install") # Still needs in command line
 
-# if(NOT CMAKE_BUILD_TYPE)
-#     message(STATUS "No CMAKE_BUILD_TYPE specified, default to Release.")
-#     set(CMAKE_BUILD_TYPE "Release")
-# endif()
 
 ##################### Open3D ######################
 # Open3D library
 find_package(Open3D REQUIRED) # need cmake flag -DOpen3D_ROOT=${HOME}/open3d_install
-
-# option(GLIBCXX_USE_CXX11_ABI "Set -D_GLIBCXX_USE_CXX11_ABI=1" ON)
-
-# include(ExternalProject)
-# ExternalProject_Add(
-#     external_open3d
-#     PREFIX open3d
-#     GIT_REPOSITORY https://github.com/intel-isl/Open3D.git
-#     GIT_TAG v0.18.0
-#     GIT_SHALLOW ON
-#     UPDATE_COMMAND ""
-#     # Check out https://github.com/intel-isl/Open3D/blob/master/CMakeLists.txt
-#     # For the full list of available options.
-#     CMAKE_ARGS
-#         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-#         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-#         -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-#         -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-#         -DGLIBCXX_USE_CXX11_ABI=${GLIBCXX_USE_CXX11_ABI}
-#         -DBUILD_SHARED_LIBS=ON
-#         -DBUILD_PYTHON_MODULE=OFF
-#         -DBUILD_EXAMPLES=OFF
-#         -DUSE_SYSTEM_JPEG=ON # otherwise stomps on opencv, breaks
-#                               # compressed image_transport (imdecode).
-#                               # Alternatively, just make this a static lib.
-#         -DBUILD_UNIT_TESTS=OFF
-#         -DPYTHON_EXECUTABLE=/usr/bin/python3
-# )
-
-# # Simulate importing Open3D::Open3D
-# ExternalProject_Get_Property(external_open3d INSTALL_DIR)
-# add_library(Open3DHelper INTERFACE)
-# add_dependencies(Open3DHelper external_open3d)
-# target_compile_features(Open3DHelper INTERFACE cxx_std_14)
-# target_compile_definitions(Open3DHelper INTERFACE _GLIBCXX_USE_CXX11_ABI=$<BOOL:${GLIBCXX_USE_CXX11_ABI}>)
-# target_include_directories(Open3DHelper INTERFACE "${INSTALL_DIR}/include" "${INSTALL_DIR}/include/open3d/3rdparty")
-# target_link_directories(Open3DHelper INTERFACE "${INSTALL_DIR}/lib")
-# target_link_libraries(Open3DHelper INTERFACE Open3D)
-# add_library(Open3D::Open3D ALIAS Open3DHelper)
 
 
 ##################### Eigen ######################
